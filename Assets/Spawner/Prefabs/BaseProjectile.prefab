@@ -12,10 +12,10 @@ GameObject:
   - component: {fileID: 5065800764902473570}
   - component: {fileID: 4192312333797629020}
   - component: {fileID: 1744158693728610816}
-  - component: {fileID: 9122196599205393823}
+  - component: {fileID: -1652672051918966480}
   m_Layer: 0
   m_Name: BaseProjectile
-  m_TagString: Untagged
+  m_TagString: Projectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -121,8 +121,8 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!70 &9122196599205393823
-CapsuleCollider2D:
+--- !u!58 &-1652672051918966480
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -135,5 +135,5 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.2, y: 0.1}
-  m_Direction: 0
+  serializedVersion: 2
+  m_Radius: 0.5

@@ -11,8 +11,10 @@ public class Projectile : MonoBehaviour
     {
         GetComponent<Animator>().runtimeAnimatorController = _projectileInfo.AnimatorController;
         GetComponent<SpriteRenderer>().sprite = _projectileInfo.Sprite;
-        this.transform.localScale = Vector2.one * _projectileInfo.Scale;
+        GetComponent<CircleCollider2D>().radius /= _projectileInfo.Scale;
+        this.transform.localScale *= _projectileInfo.Scale;
         transform.Rotate(Vector3.forward,_projectileInfo.Rotation);
+        
     }
 
     public GameObject Clone(Vector2 location)
@@ -33,10 +35,8 @@ public class Projectile : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    public float GetDamage()
     {
-        if (!other.CompareTag("Player")) return;
-
-        Debug.Log("Collision");
+        return _projectileInfo.Damage;
     }
 }
