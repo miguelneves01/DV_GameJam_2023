@@ -1,19 +1,29 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private PlayerStatsSO _initialPlayerStatsSO;
     [SerializeField] private PlayerStatsSO _playerStatsSO;
 
+    [SerializeField] private Image healthBarFill;
+    [SerializeField] private Image healthBarFollow;
+
+
     private PlayerMovement _playerMovement;
+
+    private RectTransform _healthBarRectTransform;
+    [SerializeField] private Vector3 healthBarOffset = new Vector3(0, 1, 0);
+
 
     private bool _dash;
     
     void Awake()
     {
         _playerMovement = GetComponent<PlayerMovement>();
+        _healthBarRectTransform = healthBarFollow.GetComponent<RectTransform>();
     }
 
     // Start is called before the first frame update
@@ -36,6 +46,7 @@ public class PlayerController : MonoBehaviour
         {
             StartCoroutine(_playerMovement.Dash(_playerStatsSO.Speed, movement, _playerStatsSO.DashingPower, _playerStatsSO.DashingTime, _playerStatsSO.DashingCooldown));
         }
+        UpdateHealthBarPosition();
     }
 
     private Vector2 GetInputs()
@@ -44,7 +55,7 @@ public class PlayerController : MonoBehaviour
         float moveVt = Input.GetAxis("Vertical");
 
         _dash = Input.GetKeyDown(KeyCode.LeftShift) && _playerMovement.CanDash;
-
+        UpdateHealthBarPosition();
         return new Vector2(moveHz, moveVt);
     }
 
@@ -78,6 +89,8 @@ public class PlayerController : MonoBehaviour
         {
             ScenesManager.LoadSceneByName("WinScene");
         }
+
+        healthBarFill.fillAmount = _playerStatsSO.Health / _initialPlayerStatsSO.Health;
     }
 
     private IEnumerator DamageFlashRed()
@@ -86,5 +99,11 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
         GetComponent<SpriteRenderer>().color = Color.white;
         yield return new WaitForSeconds(0.1f);
+    }
+
+    private void UpdateHealthBarPosition()
+    {
+        Vector3 screenPos = Camera.main.WorldToScreenPoint(transform.position + healthBarOffset);
+        _healthBarRectTransform.position = screenPos;
     }
 }
