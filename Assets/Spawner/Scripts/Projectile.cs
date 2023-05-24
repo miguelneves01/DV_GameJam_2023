@@ -9,12 +9,9 @@ public class Projectile : MonoBehaviour
 
     private void Start()
     {
-        GetComponent<Animator>().runtimeAnimatorController = _projectileInfo.AnimatorController;
-        GetComponent<SpriteRenderer>().sprite = _projectileInfo.Sprite;
-        GetComponent<CircleCollider2D>().radius /= _projectileInfo.Scale;
+        SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer.sprite = _projectileInfo.Sprite;
         this.transform.localScale *= _projectileInfo.Scale;
-        transform.Rotate(Vector3.forward,_projectileInfo.Rotation);
-        
     }
 
     public GameObject Clone(Vector2 location)
@@ -27,7 +24,7 @@ public class Projectile : MonoBehaviour
         _currentTime += Time.deltaTime;
         if (_currentTime < _projectileInfo.Time2Live)
         {
-            transform.Translate(_projectileInfo.Speed * Time.deltaTime * Vector2.right);
+            transform.Translate(_projectileInfo.Speed * Time.deltaTime * Vector2.down);
         }
         else
         {

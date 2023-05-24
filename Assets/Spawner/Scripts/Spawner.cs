@@ -16,7 +16,7 @@ public class Spawner : MonoBehaviour
         if (_currentTime < _timer) return;
 
         
-        Spawn(new Vector2(Random.Range(-5,5),5));
+        Spawn(new Vector2(Random.Range(-4.5f,4.5f),5));
 
         _currentTime = 0;
     }
