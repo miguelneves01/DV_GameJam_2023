@@ -11,6 +11,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Image healthBarFill;
     [SerializeField] private Image healthBarFollow;
 
+    [SerializeField] private AudioClip healSound;
+    [SerializeField] private AudioClip dmgSound;
+
 
     private PlayerMovement _playerMovement;
 
@@ -80,6 +83,12 @@ public class PlayerController : MonoBehaviour
 
     private void TakeDamage(float damage)
     {
+        if (damage > 0){
+            AudioSource.PlayClipAtPoint(dmgSound, transform.position, 1f);
+        }else{
+            AudioSource.PlayClipAtPoint(healSound, transform.position, 1f);
+        }
+
         _playerStatsSO.Health -= damage;
         _playerStatsSO.Health = Mathf.Clamp(_playerStatsSO.Health, 0, _initialPlayerStatsSO.Health);
         Debug.Log(_playerStatsSO.Health);
